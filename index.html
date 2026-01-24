@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليلك - التطبيق الإرشادي الذكي</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset بسيط */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Cairo", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* شريط التنقل */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 0.8rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: #1383b8;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #396c96;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #065b7c;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            right: 0;
+            background-color: #0785ac;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* الهيدر المحسن */
+        header {
+            background: linear-gradient(135deg, #1c1d1d 0%, #1f2020 100%);
+            color: white;
+            text-align: center;
+            padding: 80px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        header h1 {
+            font-size: 3.2em;
+            margin-bottom: 25px;
+            font-weight: 800;
+            text-shadow: 1px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.3em;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-color: #222;
+        }
+
+        /* المحتوى الرئيسي */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 70px 20px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            width: 100%;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: transform 0.4s, box-shadow 0.4s;
+            border: 1px solid #f0f0f0;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #0785ac;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #222;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* تحسين الأزرار */
+        .button-group {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 20px 40px;
+            background: linear-gradient(145deg, #ffffff, #f3f6f7);
+            color: rgb(2, 97, 141);
+            font-size: 1.2em;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.25);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            min-width: 220px;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(46, 125, 50, 0.35);
+            background: linear-gradient(145deg, #f7f7f7, #edeff0);
+        }
+
+        .btn-outline {
+            background: white;
+            color: #0785ac;
+            border: 2px solid #0785ac;
+        }
+
+        .btn-outline:hover {
+            background: #0785ac;
+            color: white;
+        }
+
+        .btn i {
+            font-size: 1.3em;
+        }
+
+        /* الفوتر المحسن */
+        footer {
+            background-color: #222;
+            color: #ddd;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #0785ac;
+        }
+
+        .copyright {
+            color: #999;
+            font-size: 0.95em;
+            margin-top: 10px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover {
+            background-color: #0785ac;
+            transform: translateY(-3px);
+        }
+
+        /* قسم التطبيق */
+        .app-section {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+        }
+
+        .app-section h2 {
+            font-size: 2.5rem;
+            color: #222;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .app-section h2::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(to left, #0785ac, #4CAF50);
+            bottom: -10px;
+            right: 20%;
+            border-radius: 2px;
+        }
+
+        .app-section p {
+            color: #555;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        /* التجاوب */
+        @media (max-width: 992px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .menu-toggle {
+                display: block;
+                font-size: 1.5rem;
+                color: #2e7d32;
+                cursor: pointer;
+            }
+            
+            header h1 {
+                font-size: 2.5em;
+            }
+            
+            header p {
+                font-size: 1.1em;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            header {
+                padding: 60px 20px;
+            }
+            
+            .app-section h2 {
+                font-size: 2rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .feature-card {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 18px 30px;
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل -->
+    
+
+    <!-- الهيدر -->
+    <header id="home">
+        <div class="header-bg"></div>
+        <div class="header-content">
+            <h1>دليلك</h1>
+            <p>تطبيق يساعدك في الوصول إلى أي مكان، سواء كان خدمات حكومية، مطاعم، مستشفيات، تاكسي، وكل ما تحتاجه بسهولة وسرعة.</p>
+        <div class="button-group">
+                <a href="DalilkApp.apk" class="btn">
+                    <i class="fas fa-download"></i>
+                    تحميل مباشر (APK)
+                </a>
+                
+                <a href="https://www.mediafire.com/file/jtt6dx6ors4iith/DalilkApp.apk/file" class="btn">
+                    <i class="fas fa-download"></i>
+                    mediafire
+                </a>
+                <a href="https://craftcoding-arch.github.io/dalilak/" class="btn">
+                    <i class="fas fa-external-link-alt"></i>
+                    نسخة الويب
+                </a>
+                
+            </div>
+            </div>
+             
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main>
+        <!-- قسم المميزات -->
+        <section id="features" class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-map-pin"></i>
+                </div>
+                <h3>توجيه دقيق</h3>
+                <p>توجيه دقيق لأقصر الطرق مع معلومات مفصلة عن الوجهات المطلوبة</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-list-alt"></i>
+                </div>
+                <h3>فئات متنوعة</h3>
+                <p>تصفح الفئات المختلفة من الخدمات الحكومية، التجارية، الطبية وغيرها</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <h3>تقييمات موثوقة</h3>
+                <p>اطلع على تقييمات المستخدمين الآخرين للخدمات والمواقع المختلفة</p>
+            </div>
+        </section>
+
+        <!-- قسم التطبيق -->
+        <section id="download" class="app-section">
+            <h2>حمّل التطبيق الآن</h2>
+            <p>استمتع بتجربة مستخدم سلسة وواجهة عربية مصممة خصيصاً لتلبية احتياجاتك اليومية</p>
+            
+        </section>
+    </main>
+
+    <!-- الفوتر -->
+    <footer id="about">
+        <div class="footer-content">
+            <a href="#" class="footer-logo">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>دليلك</span>
+            </a>
+            
+           
+            
+           
+            
+            <p class="copyright">
+                تم تطوير هذا التطبيق بواسطة 
+                <a href="https://craftcoding-arch.github.io/Craft-Coding/" style="color:#00aeff; font-weight:bold;">Craft Coding</a>
+                <br>© 2023 جميع الحقوق محفوظة
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // إضافة تفاعل لقائمة الهاتف
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        // تغيير نمط شريط التنقل عند التمرير
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
+                navbar.style.padding = '0.5rem 2rem';
+            } else {
+                navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
+                navbar.style.padding = '0.8rem 2rem';
+            }
+        });
+        
+        // تحسين الروابط التنقل السلس
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
