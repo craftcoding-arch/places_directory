@@ -5,36 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دليلك - التطبيق الإرشادي الذكي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Reset بسيط */
+        /* Reset محسن */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Cairo", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #3a86ff;
+            --primary-dark: #2667cc;
+            --secondary-color: #00d9b8;
+            --accent-color: #6c63ff;
+            --dark-bg: #0f172a;
+            --darker-bg: #0a0f1c;
+            --card-bg: #1e293b;
+            --text-light: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.4);
+            --transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            --border-radius: 16px;
         }
 
         body {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            color: #333;
-            line-height: 1.6;
+            font-family: 'Cairo', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            line-height: 1.7;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
-        /* شريط التنقل */
+        /* شريط التنقل المحسن */
         .navbar {
-            background-color: white;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            background-color: var(--darker-bg);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             position: sticky;
             top: 0;
             z-index: 1000;
-            padding: 0.8rem 2rem;
+            padding: 0.8rem 5%;
+            transition: var(--transition);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -44,80 +65,135 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-weight: 700;
-            font-size: 1.5rem;
-            color: #1383b8;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: var(--text-light);
             text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
         }
 
         .logo i {
-            font-size: 1.8rem;
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #396c96;
-            font-weight: 500;
-            transition: color 0.3s;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: var(--transition);
             position: relative;
+            padding: 0.5rem 0;
         }
 
         .nav-links a:hover {
-            color: #065b7c;
+            color: var(--primary-color);
+        }
+
+        .nav-links a.active {
+            color: var(--primary-color);
+        }
+
+        .nav-links a.active::after {
+            width: 100%;
         }
 
         .nav-links a::after {
             content: '';
             position: absolute;
             width: 0;
-            height: 2px;
-            bottom: -5px;
+            height: 3px;
+            bottom: 0;
             right: 0;
-            background-color: #0785ac;
-            transition: width 0.3s;
+            background: linear-gradient(to left, var(--primary-color), var(--secondary-color));
+            transition: var(--transition);
+            border-radius: 3px;
         }
 
         .nav-links a:hover::after {
             width: 100%;
         }
 
+        .nav-cta {
+            background: linear-gradient(to left, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(58, 134, 255, 0.4);
+            transition: var(--transition);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(58, 134, 255, 0.6);
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
         /* الهيدر المحسن */
         header {
-            background: linear-gradient(135deg, #1c1d1d 0%, #1f2020 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
             color: white;
             text-align: center;
-            padding: 80px 20px;
+            padding: 100px 5% 80px;
             position: relative;
             overflow: hidden;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .header-content {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             position: relative;
             z-index: 2;
         }
 
         header h1 {
-            font-size: 3.2em;
+            font-size: 3.5rem;
             margin-bottom: 25px;
             font-weight: 800;
-            text-shadow: 1px 2px 4px rgba(0,0,0,0.2);
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .highlight {
+            background: linear-gradient(to right, #3a86ff, #6c63ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         header p {
-            font-size: 1.3em;
-            max-width: 700px;
-            margin: 0 auto 30px;
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
             line-height: 1.8;
-            opacity: 0.95;
+            opacity: 0.9;
+            font-weight: 300;
+            color: var(--text-muted);
         }
 
         .header-bg {
@@ -127,58 +203,97 @@
             width: 100%;
             height: 100%;
             opacity: 0.1;
-            background-color: #222;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
         /* المحتوى الرئيسي */
         main {
             flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 70px 20px;
+            padding: 80px 5%;
+            background-color: var(--dark-bg);
         }
 
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--text-light);
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 5px;
+            background: linear-gradient(to left, var(--primary-color), var(--secondary-color));
+            bottom: -15px;
+            right: 50%;
+            transform: translateX(50%);
+            border-radius: 5px;
+        }
+
+        /* المميزات المحسنة */
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto 60px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+            max-width: 1300px;
+            margin: 0 auto 80px;
             width: 100%;
         }
 
         .feature-card {
-            background: white;
-            border-radius: 16px;
-            padding: 30px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
             text-align: center;
-            transition: transform 0.4s, box-shadow 0.4s;
-            border: 1px solid #f0f0f0;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 5px;
+            height: 0;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            transition: var(--transition);
+        }
+
+        .feature-card:hover::before {
+            height: 100%;
         }
 
         .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-color);
         }
 
         .feature-icon {
-            font-size: 3rem;
-            color: #0785ac;
-            margin-bottom: 20px;
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
         }
 
         .feature-card h3 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 15px;
-            color: #222;
+            color: var(--text-light);
         }
 
         .feature-card p {
-            color: #666;
-            font-size: 1rem;
+            color: var(--text-muted);
+            font-size: 1.05rem;
         }
 
         /* تحسين الأزرار */
@@ -187,106 +302,257 @@
             gap: 25px;
             flex-wrap: wrap;
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 40px;
         }
 
         .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            padding: 20px 40px;
-            background: linear-gradient(145deg, #ffffff, #f3f6f7);
-            color: rgb(2, 97, 141);
-            font-size: 1.2em;
-            font-weight: 600;
+            gap: 15px;
+            padding: 18px 35px;
+            background: var(--card-bg);
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            font-weight: 700;
             text-decoration: none;
             border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.25);
-            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: var(--transition);
             position: relative;
             overflow: hidden;
-            border: none;
-            cursor: pointer;
+            border: 2px solid var(--border-color);
             min-width: 220px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, var(--primary-color), var(--accent-color));
+            z-index: 0;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn span, .btn i {
+            position: relative;
+            z-index: 1;
         }
 
         .btn:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(46, 125, 50, 0.35);
-            background: linear-gradient(145deg, #f7f7f7, #edeff0);
-        }
-
-        .btn-outline {
-            background: white;
-            color: #0785ac;
-            border: 2px solid #0785ac;
-        }
-
-        .btn-outline:hover {
-            background: #0785ac;
+            box-shadow: 0 15px 30px rgba(58, 134, 255, 0.3);
             color: white;
+            border-color: transparent;
         }
 
-        .btn i {
-            font-size: 1.3em;
+        .btn-primary {
+            background: linear-gradient(145deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+        }
+
+        .btn-primary::before {
+            background: linear-gradient(145deg, var(--primary-dark), #4d5dff);
+        }
+
+        /* قسم التطبيق */
+        .app-section {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto 80px;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .app-section::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(58, 134, 255, 0.1) 0%, rgba(58, 134, 255, 0) 70%);
+            top: -150px;
+            right: -150px;
+        }
+
+        .app-section::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 217, 184, 0.1) 0%, rgba(0, 217, 184, 0) 70%);
+            bottom: -100px;
+            left: -100px;
+        }
+
+        .app-section h2 {
+            font-size: 2.8rem;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .app-section p {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-right: auto;
+            margin-left: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* قسم حول التطبيق */
+        .about-section {
+            max-width: 1200px;
+            margin: 0 auto 100px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-content h2 {
+            font-size: 2.5rem;
+            color: var(--text-light);
+            margin-bottom: 25px;
+        }
+
+        .about-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border-radius: var(--border-radius);
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .about-image i {
+            font-size: 10rem;
+            color: rgba(255, 255, 255, 0.9);
+            z-index: 1;
         }
 
         /* الفوتر المحسن */
         footer {
-            background-color: #222;
+            background: linear-gradient(135deg, #0a0f1c 0%, #0f172a 100%);
             color: #ddd;
-            text-align: center;
-            padding: 40px 20px;
+            padding: 70px 5% 40px;
             margin-top: 50px;
+            border-top: 1px solid var(--border-color);
         }
 
         .footer-content {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+        }
+
+        .footer-col h3 {
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to left, var(--primary-color), var(--secondary-color));
+            bottom: 0;
+            right: 0;
+            border-radius: 3px;
         }
 
         .footer-logo {
             font-size: 1.8rem;
-            font-weight: 700;
+            font-weight: 800;
             color: white;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .footer-logo i {
+            font-size: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-col p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: var(--transition);
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        .footer-links {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 15px 0;
-        }
-
-        .footer-links a {
-            color: #bbb;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
         .footer-links a:hover {
-            color: #0785ac;
-        }
-
-        .copyright {
-            color: #999;
-            font-size: 0.95em;
-            margin-top: 10px;
+            color: var(--primary-color);
+            transform: translateX(-5px);
         }
 
         .social-icons {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             margin-top: 20px;
         }
 
@@ -294,74 +560,79 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background-color: #333;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.05);
             border-radius: 50%;
             color: white;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .social-icons a:hover {
-            background-color: #0785ac;
-            transform: translateY(-3px);
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
         }
 
-        /* قسم التطبيق */
-        .app-section {
+        .copyright {
             text-align: center;
-            max-width: 800px;
-            margin: 0 auto 50px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
         }
 
-        .app-section h2 {
-            font-size: 2.5rem;
-            color: #222;
-            margin-bottom: 20px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .app-section h2::after {
-            content: '';
-            position: absolute;
-            width: 60%;
-            height: 4px;
-            background: linear-gradient(to left, #0785ac, #4CAF50);
-            bottom: -10px;
-            right: 20%;
-            border-radius: 2px;
-        }
-
-        .app-section p {
-            color: #555;
-            font-size: 1.2rem;
-            margin-bottom: 40px;
-            max-width: 700px;
-            margin-right: auto;
-            margin-left: auto;
+        .copyright a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
         }
 
         /* التجاوب */
+        @media (max-width: 1100px) {
+            .about-section {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .about-image {
+                height: 300px;
+                order: -1;
+            }
+        }
+
         @media (max-width: 992px) {
             .nav-links {
                 display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 100%;
+                background-color: var(--darker-bg);
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                border-top: 1px solid var(--border-color);
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .nav-links.active {
+                display: flex;
             }
             
             .menu-toggle {
                 display: block;
-                font-size: 1.5rem;
-                color: #2e7d32;
-                cursor: pointer;
             }
             
             header h1 {
-                font-size: 2.5em;
+                font-size: 2.8rem;
             }
             
-            header p {
-                font-size: 1.1em;
+            .section-title {
+                font-size: 2.2rem;
             }
         }
 
@@ -381,142 +652,334 @@
             }
             
             header {
-                padding: 60px 20px;
+                padding: 80px 5% 60px;
+            }
+            
+            header h1 {
+                font-size: 2.3rem;
+            }
+            
+            header p {
+                font-size: 1.1rem;
             }
             
             .app-section h2 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             
-            .footer-links {
-                flex-direction: column;
-                gap: 15px;
+            .app-section {
+                padding: 40px 20px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
             }
         }
 
         @media (max-width: 480px) {
             header h1 {
-                font-size: 2em;
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
             }
             
             .feature-card {
-                padding: 20px;
+                padding: 30px 20px;
             }
             
             .btn {
-                padding: 18px 30px;
-                font-size: 1.1em;
+                padding: 16px 25px;
+                font-size: 1rem;
             }
+            
+            .about-image i {
+                font-size: 7rem;
+            }
+        }
+
+        /* تأثيرات إضافية */
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* إضافة تأثير لمعان للأزرار */
+        .btn-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-shine::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 20%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+            transition: all 0.6s ease;
+        }
+        
+        .btn-shine:hover::after {
+            right: 120%;
+        }
+        
+        /* تأثيرات النصوص */
+        .glow-text {
+            text-shadow: 0 0 10px rgba(58, 134, 255, 0.5);
         }
     </style>
 </head>
 <body>
     <!-- شريط التنقل -->
-    
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-map-marked-alt"></i>
+                <span>دليلك</span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#home" class="active">الرئيسية</a></li>
+                <li><a href="#features">المميزات</a></li>
+                <li><a href="#about">حول التطبيق</a></li>
+                <li><a href="#download">التنزيل</a></li>
+                <li><a href="#contact">اتصل بنا</a></li>
+            </ul>
+            
+            <a href="#download" class="nav-cta btn-shine">حمّل الآن</a>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
 
     <!-- الهيدر -->
     <header id="home">
         <div class="header-bg"></div>
         <div class="header-content">
-            <h1>دليلك</h1>
-            <p>تطبيق يساعدك في الوصول إلى أي مكان، سواء كان خدمات حكومية، مطاعم، مستشفيات، تاكسي، وكل ما تحتاجه بسهولة وسرعة.</p>
-        <div class="button-group">
-                <a href="DalilakApp1.1.1.apk" class="btn">
+            <h1 class="fade-in glow-text">دليلك الإلكتروني <span class="highlight">لجميع احتياجاتك</span></h1>
+            <p class="fade-in">تطبيق يساعدك في الوصول إلى أي مكان، سواء كان خدمات حكومية، مطاعم، مستشفيات، تاكسي، وكل ما تحتاجه بسهولة وسرعة. واجهة عربية مصممة خصيصاً لتلبية احتياجاتك اليومية.</p>
+            
+            <div class="button-group fade-in">
+                <a href="DalilakApp1.1.2.apk" class="btn btn-primary pulse btn-shine">
                     <i class="fas fa-download"></i>
-                    تحميل مباشر (APK)
+                    <span>تحميل مباشر (APK)</span>
                 </a>
                 
-                <a href="https://www.mediafire.com/file/jtt6dx6ors4iith/DalilkApp.apk/file" class="btn">
-                    <i class="fas fa-download"></i>
-                    mediafire
+                <a href="https://www.mediafire.com/file/o14t2tqih64a5tf/DalilakApp1.1.2.apk/file" class="btn btn-shine">
+                    <i class="fas fa-cloud-download-alt"></i>
+                    <span>تحميل عبر Mediafire</span>
                 </a>
-                <a href="https://craftcoding-arch.github.io/dalilak/" class="btn">
+                
+                <a href="https://dalilak.onrender.com" class="btn btn-shine">
                     <i class="fas fa-external-link-alt"></i>
-                    نسخة الويب
+                    <span>استخدام نسخة الويب</span>
                 </a>
-                
             </div>
-            </div>
-             
+        </div>
     </header>
 
     <!-- المحتوى الرئيسي -->
     <main>
         <!-- قسم المميزات -->
-        <section id="features" class="features">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-map-pin"></i>
+        <section id="features">
+            <h2 class="section-title fade-in">مميزات التطبيق</h2>
+            <div class="features">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-pin"></i>
+                    </div>
+                    <h3>توجيه دقيق</h3>
+                    <p>توجيه دقيق لأقصر الطرق مع معلومات مفصلة عن الوجهات المطلوبة وخيارات متعددة للتنقل</p>
                 </div>
-                <h3>توجيه دقيق</h3>
-                <p>توجيه دقيق لأقصر الطرق مع معلومات مفصلة عن الوجهات المطلوبة</p>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-list-alt"></i>
+                    </div>
+                    <h3>فئات متنوعة</h3>
+                    <p>تصفح الفئات المختلفة من الخدمات الحكومية، التجارية، الطبية، التعليمية وغيرها بسهولة</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>تقييمات موثوقة</h3>
+                    <p>اطلع على تقييمات المستخدمين الآخرين للخدمات والمواقع المختلفة لاتخاذ أفضل القرارات</p>
+                </div>
+                
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>سرعة فائقة</h3>
+                    <p>تصميم خفيف وسريع لا يستهلك موارد الجهاز ويعمل بسلاسة حتى على الأجهزة المتوسطة</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم حول التطبيق -->
+        <section id="about" class="about-section">
+            <div class="about-content fade-in">
+                <h2>حول تطبيق دليلك</h2>
+                <p>دليلك هو تطبيق إرشادي ذكي مصمم خصيصاً للمستخدم العربي، يهدف إلى تسهيل الحياة اليومية من خلال توفير معلومات دقيقة وموثوقة عن جميع الخدمات والمرافق في محيطك.</p>
+                <p>تم تطوير التطبيق بأيدي عربية خبيرة في مجال البرمجيات والتصميم، مع مراعاة خصوصية المستخدم العربي واحتياجاته الفريدة.</p>
+                <p>يتم تحديث المعلومات والبيانات بشكل دوري لضمان دقتها ومواكبتها لأحدث التغييرات في الخدمات والمرافق.</p>
+                
+                <div class="button-group" style="justify-content: flex-start; margin-top: 30px;">
+                    <a href="#download" class="btn btn-primary btn-shine">
+                        <i class="fas fa-download"></i>
+                        <span>حمّل التطبيق الآن</span>
+                    </a>
+                </div>
             </div>
             
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-list-alt"></i>
-                </div>
-                <h3>فئات متنوعة</h3>
-                <p>تصفح الفئات المختلفة من الخدمات الحكومية، التجارية، الطبية وغيرها</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-star"></i>
-                </div>
-                <h3>تقييمات موثوقة</h3>
-                <p>اطلع على تقييمات المستخدمين الآخرين للخدمات والمواقع المختلفة</p>
+            <div class="about-image fade-in">
+                <i class="fas fa-map-marked-alt"></i>
             </div>
         </section>
 
         <!-- قسم التطبيق -->
-        <section id="download" class="app-section">
+        <section id="download" class="app-section fade-in">
             <h2>حمّل التطبيق الآن</h2>
-            <p>استمتع بتجربة مستخدم سلسة وواجهة عربية مصممة خصيصاً لتلبية احتياجاتك اليومية</p>
+            <p>استمتع بتجربة مستخدم سلسة وواجهة عربية مصممة خصيصاً لتلبية احتياجاتك اليومية. حمّل دليلك الآن مجاناً!</p>
             
+            <div class="button-group">
+                <a href="DalilakApp1.1.2.apk" class="btn btn-primary btn-shine">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>تحميل للأندرويد</span>
+                </a>
+                
+                <a href="https://craftcoding-arch.github.io/dalilak/" class="btn btn-shine">
+                    <i class="fas fa-globe"></i>
+                    <span>نسخة الويب</span>
+                </a>
+            </div>
+            
+            <div style="margin-top: 40px; color: var(--text-muted); font-size: 0.9rem;">
+                <p><i class="fas fa-info-circle"></i> حجم التطبيق: 15 ميجابايت | متوافق مع أندرويد 7.0 فما فوق</p>
+            </div>
         </section>
     </main>
 
     <!-- الفوتر -->
-    <footer id="about">
+    <footer id="contact">
         <div class="footer-content">
-            <a href="#" class="footer-logo">
-                <i class="fas fa-map-marked-alt"></i>
-                <span>دليلك</span>
-            </a>
+            <div class="footer-col">
+                <a href="#" class="footer-logo">
+                    <i class="fas fa-map-marked-alt"></i>
+                    <span>دليلك</span>
+                </a>
+                <p>تطبيق دليلك هو مرشدك الذكي للوصول إلى جميع الخدمات والمرافق في محيطك بسهولة وسرعة.</p>
+                
+                <div class="social-icons">
+                    <a href="#" class="btn-shine"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="btn-shine"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="btn-shine"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="btn-shine"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
             
-           
+            <div class="footer-col">
+                <h3>روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li><a href="#home"><i class="fas fa-chevron-left"></i> الرئيسية</a></li>
+                    <li><a href="#features"><i class="fas fa-chevron-left"></i> المميزات</a></li>
+                    <li><a href="#about"><i class="fas fa-chevron-left"></i> حول التطبيق</a></li>
+                    <li><a href="#download"><i class="fas fa-chevron-left"></i> التنزيل</a></li>
+                </ul>
+            </div>
             
-           
-            
-            <p class="copyright">
-                تم تطوير هذا التطبيق بواسطة 
-                <a href="https://craftcoding-arch.github.io/Craft-Coding/" style="color:#00aeff; font-weight:bold;">Craft Coding</a>
-                <br>© 2023 جميع الحقوق محفوظة
-            </p>
+            <div class="footer-col">
+                <h3>اتصل بنا</h3>
+                <ul class="footer-links">
+                   <li>
+    <a href="mailto:craftcoding847@gmail.com?subject=استفسار عن تطبيق دليلك&body=مرحباً، أريد الاستفسار عن تطبيق دليلك" class="email-link">
+        <i class="fas fa-envelope"></i>
+        craftcoding847@gmail.com
+    </a>
+</li>
+                    <li>
+    <a href="https://wa.me/963994817003" target="_blank" class="whatsapp-link">
+        <i class="fab fa-whatsapp"></i>واتساب: 094817003 963+
+    </a>
+</li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i>الجمهورية العربية السورية</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>تم تطوير هذا التطبيق بواسطة <a href="https://craft-coding.onrender.com">Craft Coding</a></p>
+            <p>© 2023 جميع الحقوق محفوظة</p>
         </div>
     </footer>
 
     <script>
-        // إضافة تفاعل لقائمة الهاتف
-        document.querySelector('.menu-toggle').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        // تفعيل القائمة المتنقلة
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuToggle.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            menuToggle.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // إغلاق القائمة عند النقر على رابط
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+            });
         });
         
         // تغيير نمط شريط التنقل عند التمرير
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.1)';
-                navbar.style.padding = '0.5rem 2rem';
+            if (window.scrollY > 100) {
+                navbar.style.padding = '0.5rem 5%';
+                navbar.style.boxShadow = '0 5px 25px rgba(0, 0, 0, 0.4)';
             } else {
-                navbar.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.08)';
-                navbar.style.padding = '0.8rem 2rem';
+                navbar.style.padding = '0.8rem 5%';
+                navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.3)';
             }
+            
+            // إضافة تأثير الظهور التدريجي للعناصر
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('fade-in');
+                }
+            });
         });
         
-        // تحسين الروابط التنقل السلس
+        // تفعيل التنقل السلس
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -531,6 +994,32 @@
                     });
                 }
             });
+        });
+        
+        // تفعيل العناصر عند التحميل
+        document.addEventListener('DOMContentLoaded', function() {
+            // إضافة تأثير الظهور الأولي
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                });
+            }, 100);
+            
+            // إضافة تأثير النبض للزر الرئيسي
+            const downloadBtn = document.querySelector('.btn-primary');
+            setInterval(() => {
+                downloadBtn.classList.toggle('pulse');
+            }, 4000);
+            
+            // إضافة تأثير توهج متقطع للنصوص المميزة
+            const glowText = document.querySelector('.glow-text');
+            setInterval(() => {
+                glowText.classList.toggle('glow-text');
+                setTimeout(() => {
+                    glowText.classList.add('glow-text');
+                }, 500);
+            }, 3000);
         });
     </script>
 </body>
